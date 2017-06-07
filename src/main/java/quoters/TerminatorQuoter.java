@@ -1,7 +1,9 @@
 package quoters;
 
 import lombok.Setter;
+import org.springframework.core.env.Environment;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -11,8 +13,10 @@ public class TerminatorQuoter implements Quoter {
     @Setter
     private List<String> messages;
 
+
     @Override
     public void sayQuote() {
         messages.forEach(System.out::println);
     }
+
 }

@@ -33,21 +33,18 @@ public class BenchmarkProxyConfigurer implements ProxyConfigurer {
         }
 
         if (type.isAnnotationPresent(Benchmark.class) || isMethodWantBenchmark) {
-            return (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), new InvocationHandler() {
-                @Override
-                public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                    Method originalMethod = type.getMethod(method.getName(), method.getParameterTypes());
-                    if (benchmarkFlag.isEnabled() && (type.isAnnotationPresent(Benchmark.class) || originalMethod.isAnnotationPresent(Benchmark.class))) {
-                        System.out.println("********BENCHMARK of " + method.getName() + " was started *********");
-                        long start = System.nanoTime();
-                        Object retVal = method.invoke(t, args);
-                        long end = System.nanoTime();
-                        System.out.println(end - start);
-                        System.out.println("********BENCHMARK of " + method.getName() + " was finished *********");
-                        return retVal;
-                    } else {
-                        return method.invoke(t, args);
-                    }
+            return (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), (proxy, method, args) -> {
+                Method originalMethod = type.getMethod(method.getName(), method.getParameterTypes());
+                if (benchmarkFlag.isEnabled() && (type.isAnnotationPresent(Benchmark.class) || originalMethod.isAnnotationPresent(Benchmark.class))) {
+                    System.out.println("********BENCHMARK of " + method.getName() + " was started *********");
+                    long start = System.nanoTime();
+                    Object retVal = method.invoke(t, args);
+                    long end = System.nanoTime();
+                    System.out.println(end - start);
+                    System.out.println("********BENCHMARK of " + method.getName() + " was finished *********");
+                    return retVal;
+                } else {
+                    return method.invoke(t, args);
                 }
             });
         } else {

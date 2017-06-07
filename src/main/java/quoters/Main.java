@@ -7,8 +7,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Main {
     public static void main(String[] args) {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("conext.xml");
-        context.getBeansOfType(Quoter.class).values().forEach(Quoter::sayQuote);
+        ClassPathXmlApplicationContext context =
+                new ClassPathXmlApplicationContext("conext.xml");
 
     }
 }
