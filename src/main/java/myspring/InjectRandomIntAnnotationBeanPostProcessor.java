@@ -1,6 +1,8 @@
 package myspring;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import java.lang.reflect.Field;
 import java.util.Random;
@@ -8,7 +10,8 @@ import java.util.Random;
 /**
  * Created by Evegeny on 06/06/2017.
  */
-public class InjectRandomIntObjectConfigurer implements ObjectConfigurer {
+public class InjectRandomIntAnnotationBeanPostProcessor implements ObjectConfigurer, BeanPostProcessor {
+    private Random random = new Random();
     @Override
     @SneakyThrows
     public void configure(Object t) {
@@ -19,11 +22,21 @@ public class InjectRandomIntObjectConfigurer implements ObjectConfigurer {
                 InjectRandomInt annotation = field.getAnnotation(InjectRandomInt.class);
                 int min = annotation.min();
                 int max = annotation.max();
-                Random random = new Random();
                 int value = min + random.nextInt(max - min);
                 field.setAccessible(true);
                 field.set(t,value);
             }
         }
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        configure(bean);
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return bean;
     }
 }

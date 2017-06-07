@@ -1,6 +1,8 @@
 package myspring;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -8,11 +10,13 @@ import java.lang.management.ManagementFactory;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Evegeny on 06/06/2017.
  */
-public class BenchmarkProxyConfigurer implements ProxyConfigurer {
+public class BenchmarkProxyConfigurer implements ProxyConfigurer, BeanPostProcessor {
     private BenchmarkFlag benchmarkFlag = new BenchmarkFlag();
 
     @SneakyThrows
@@ -22,7 +26,7 @@ public class BenchmarkProxyConfigurer implements ProxyConfigurer {
     }
 
     @Override
-    public <T> T wrapWithProxy(T t, Class<T> type) {
+    public Object wrapWithProxy(Object t, Class type) {
         boolean isMethodWantBenchmark = false;
         Method[] methods = type.getMethods();
         for (Method method : methods) {
@@ -33,7 +37,7 @@ public class BenchmarkProxyConfigurer implements ProxyConfigurer {
         }
 
         if (type.isAnnotationPresent(Benchmark.class) || isMethodWantBenchmark) {
-            return (T) Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), (proxy, method, args) -> {
+            return Proxy.newProxyInstance(type.getClassLoader(), type.getInterfaces(), (proxy, method, args) -> {
                 Method originalMethod = type.getMethod(method.getName(), method.getParameterTypes());
                 if (benchmarkFlag.isEnabled() && (type.isAnnotationPresent(Benchmark.class) || originalMethod.isAnnotationPresent(Benchmark.class))) {
                     System.out.println("********BENCHMARK of " + method.getName() + " was started *********");
@@ -50,5 +54,20 @@ public class BenchmarkProxyConfigurer implements ProxyConfigurer {
         } else {
             return t;
         }
+    }
+
+
+    private Map<String, Class> map = new HashMap<>();
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        Class<?> beanClass = bean.getClass();
+        map.put(beanName, beanClass);
+        return bean;
+    }
+
+    @Override
+    public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+        return wrapWithProxy(bean,map.get(beanName));
     }
 }

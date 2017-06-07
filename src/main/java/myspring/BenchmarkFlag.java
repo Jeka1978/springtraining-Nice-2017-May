@@ -7,5 +7,5 @@ import lombok.Data;
  */
 @Data
 public class BenchmarkFlag implements BenchmarkFlagMBean {
-    private boolean enabled;
+    private boolean enabled = true;
 }

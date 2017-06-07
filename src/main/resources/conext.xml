@@ -5,6 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
+    <bean class="myspring.InjectRandomIntAnnotationBeanPostProcessor"/>
 
     <bean id="quote" class="java.lang.String">
         <constructor-arg value="get daaaaaaaaaaawm"/>
@@ -31,6 +32,6 @@
         </property>
     </bean>
     <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
-
+    <bean class="myspring.BenchmarkProxyConfigurer"/>
 
 </beans>
