@@ -2,6 +2,7 @@ package quoters;
 
 import lombok.Setter;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 /**
@@ -11,7 +12,9 @@ import java.util.List;
 @Setter
 public class TalkingRobotImpl implements TalkingRobot {
     private List<Quoter> quoters;
+
     @Override
+    @PostConstruct
     public void talk() {
 //        quoters.forEach(quoter -> quoter.sayQuote());
 

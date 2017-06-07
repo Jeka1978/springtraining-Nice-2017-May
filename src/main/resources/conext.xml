@@ -4,6 +4,11 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+
+
+    <bean id="quote" class="java.lang.String">
+        <constructor-arg value="get daaaaaaaaaaawm"/>
+    </bean>
     <bean id="shakespearQuoter" class="quoters.ShakespearQuoter">
         <property name="message" value="2 B || ! 2 B"/>
     </bean>
@@ -12,11 +17,12 @@
         <property name="messages">
             <list>
                 <value>I'll be back</value>
+                <ref bean="quote"/>
                 <value>Astalavista baby</value>
             </list>
         </property>
     </bean>
-    <bean id="robot" class="quoters.TalkingRobotImpl" init-method="talk">
+    <bean id="robot" class="quoters.TalkingRobotImpl">
         <property name="quoters">
             <list>
                 <ref bean="terminatorQuoter"/>
@@ -24,6 +30,7 @@
             </list>
         </property>
     </bean>
+    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 
 
 </beans>
