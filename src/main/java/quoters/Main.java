@@ -10,5 +10,7 @@ public class Main {
         ClassPathXmlApplicationContext context =
                 new ClassPathXmlApplicationContext("conext.xml");
 
+
+        context.close();
     }
 }
