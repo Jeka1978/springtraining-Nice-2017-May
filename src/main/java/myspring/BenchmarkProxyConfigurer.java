@@ -3,6 +3,7 @@ package myspring;
 import lombok.SneakyThrows;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.stereotype.Component;
 
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
@@ -16,6 +17,7 @@ import java.util.Map;
 /**
  * Created by Evegeny on 06/06/2017.
  */
+@Component
 public class BenchmarkProxyConfigurer implements ProxyConfigurer, BeanPostProcessor {
     private BenchmarkFlag benchmarkFlag = new BenchmarkFlag();
 
