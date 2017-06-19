@@ -1,12 +1,11 @@
 package screensaver;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 
 import java.awt.*;
 import java.util.Random;
+
+import static org.springframework.context.annotation.ScopedProxyMode.TARGET_CLASS;
 
 /**
  * Created by Evegeny on 19/06/2017.
@@ -17,21 +16,13 @@ public class Conf {
     private Random random = new Random();
 
     @Bean
-    @Scope("prototype")
+    @Scope(value = "prototype",proxyMode = TARGET_CLASS)
     public Color color(){
         Color color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
         return color;
     }
 
-    @Bean
-    public ColorFrame colorFrame(){
-        return new ColorFrame() {
-            @Override
-            protected Color getColorBean() {
-                return color();
-            }
-        };
-    }
+
 }
 
 
