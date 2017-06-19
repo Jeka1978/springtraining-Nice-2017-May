@@ -13,5 +13,8 @@ public class Main {
                     moveToRandomLocation();
             Thread.sleep(50);
         }
+
+
+
     }
 }

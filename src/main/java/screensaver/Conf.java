@@ -16,7 +16,7 @@ public class Conf {
     private Random random = new Random();
 
     @Bean
-    @Scope(value = "prototype",proxyMode = TARGET_CLASS)
+    @Scope(value = "twoSeconds",proxyMode = TARGET_CLASS)
     public Color color(){
         Color color = new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255));
         return color;
