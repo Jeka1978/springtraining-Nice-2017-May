@@ -5,4 +5,5 @@ package neveruseswitch;
  */
 public interface MailGenerator {
     String generateBody();
+    int mailCode();
 }
