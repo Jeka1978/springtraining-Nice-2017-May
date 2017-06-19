@@ -1,6 +1,8 @@
 package quoters;
 
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Setter
 public class TalkingRobotImpl implements TalkingRobot {
     private List<Quoter> quoters;
+
+    @Autowired
+    private Environment environment;
 
     @Override
     @PostConstruct

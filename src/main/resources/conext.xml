@@ -4,14 +4,25 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <bean id="integerFactory"
+          class="quoters.IntegerFactory">
+
+    </bean>
+    <bean class="java.lang.Integer" scope="prototype"
+          factory-bean="integerFactory"
+          factory-method="randomInt"/>
+
+    <context:property-placeholder location="classpath:qoutes.properties"/>
+    <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/>
 
     <bean class="myspring.InjectRandomIntAnnotationBeanPostProcessor"/>
+    <bean class="quoters.DeprecatedClassReplacerBeanFactoryPostProcessor"/>
 
     <bean id="quote" class="java.lang.String">
         <constructor-arg value="get daaaaaaaaaaawm"/>
     </bean>
     <bean id="shakespearQuoter" class="quoters.ShakespearQuoter">
-        <property name="message" value="2 B || ! 2 B"/>
+        <property name="message" value="${shake}"/>
     </bean>
 
     <bean id="terminatorQuoter" class="quoters.TerminatorQuoter" destroy-method="killAll">
