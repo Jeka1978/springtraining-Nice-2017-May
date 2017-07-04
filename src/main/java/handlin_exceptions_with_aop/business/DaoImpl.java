@@ -1,5 +1,6 @@
-package handlin_exceptions_with_aop;
+package handlin_exceptions_with_aop.business;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -7,9 +8,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class DaoImpl implements Dao {
+    @Autowired
+    private DaoAssistant assistant;
     @Override
     public void savePerson() {
         System.out.println("saving....");
-        throw new DBException("fire all dba!!!");
+        assistant.save();
     }
 }

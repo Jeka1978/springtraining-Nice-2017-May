@@ -1,4 +1,4 @@
-package handlin_exceptions_with_aop;
+package handlin_exceptions_with_aop.business;
 
 /**
  * Created by Evegeny on 04/07/2017.

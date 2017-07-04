@@ -1,4 +1,4 @@
-package handlin_exceptions_with_aop;
+package handlin_exceptions_with_aop.business;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
