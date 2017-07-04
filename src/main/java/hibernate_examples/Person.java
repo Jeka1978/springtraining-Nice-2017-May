@@ -1,8 +1,6 @@
 package hibernate_examples;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -18,7 +16,9 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 @EqualsAndHashCode(exclude = "id")
+@ToString
 public class Person {
 
     @Id
@@ -28,4 +28,7 @@ public class Person {
     private String name;
 
 
+    public Person(String name) {
+        this.name = name;
+    }
 }

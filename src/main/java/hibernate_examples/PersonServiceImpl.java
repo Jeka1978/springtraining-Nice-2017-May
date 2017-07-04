@@ -13,7 +13,6 @@ import java.util.List;
  * Created by Evegeny on 04/07/2017.
  */
 @Service
-@javax.transaction.Transactional
 public class PersonServiceImpl implements PersonService {
     @PersistenceContext
     private EntityManager entityManager;
@@ -21,7 +20,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional(timeout = 1000)
     public void savePerson(Person person) {
-        entityManager.merge(person);
+        entityManager.persist(person);
         person.setName(person.getName().toUpperCase());
     }
 
