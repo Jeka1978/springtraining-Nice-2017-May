@@ -1,5 +1,6 @@
 package quoters.aop;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -19,8 +20,9 @@ public class QuoterAspect {
     public void deprecatedMethod(){}
 
     @Before("sayMethods()")
-    public void handleSayMethods(){
-        System.out.print("this is quote: ");
+    public void handleSayMethods(JoinPoint jp){
+        String name = jp.getTarget().getClass().getSimpleName();
+        System.out.print("this is quote of "+name+": ");
     }
 
 }
